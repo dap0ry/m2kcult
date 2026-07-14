@@ -1,0 +1,324 @@
+/* ── Auth Pages (login.html / register.html) ── */
+
+/* Page wrapper above fixed video */
+.auth-page-content {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+/* Override body bg so video shows through */
+.auth-body {
+  background: #000;
+}
+
+/* ── Video Background ── */
+.auth-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+.auth-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.auth-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.42);
+}
+
+/* ── Main Content Area ── */
+.auth-main {
+  height: calc(100vh - 42px - 62px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 24px 32px;
+  gap: 16px;
+}
+
+/* ── Logo above card ── */
+.auth-logo-link {
+  display: block;
+  text-decoration: none;
+}
+
+.auth-logo {
+  width: clamp(80px, 12vw, 140px);
+  height: auto;
+  filter: drop-shadow(0 4px 28px rgba(0, 0, 0, 0.55));
+}
+
+/* ── Glass Card ── */
+.auth-card {
+  background: transparent;
+  border: none;
+  padding: 48px 52px 44px;
+  width: min(440px, 92vw);
+  text-align: center;
+}
+
+/* ── Headings ── */
+.auth-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 700;
+  font-style: italic;
+  color: #fff;
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.5);
+}
+
+.auth-subtitle {
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 36px;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+}
+
+/* ── Form ── */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  text-align: left;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.auth-label {
+  font-size: 9px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+}
+
+.auth-input {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+  color: #fff;
+  padding: 14px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  outline: none;
+  transition: border-color 0.22s;
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.auth-input::placeholder {
+  color: rgba(255, 255, 255, 0.18);
+}
+
+.auth-input:focus {
+  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ── Password toggle ── */
+.auth-input-wrap {
+  position: relative;
+}
+
+.auth-input-wrap .auth-input {
+  padding-right: 48px;
+}
+
+.auth-toggle-pw {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.auth-toggle-pw:hover {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* ── Forgot password ── */
+.auth-forgot {
+  font-size: 10px;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  align-self: flex-end;
+  transition: opacity 0.2s;
+  font-weight: 700;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+}
+
+.auth-forgot:hover {
+  opacity: 0.65;
+}
+
+/* ── Checkbox ── */
+.auth-checkbox-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: left;
+  margin-top: 4px;
+}
+
+.auth-checkbox {
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  min-height: 14px;
+  margin-top: 2px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.auth-checkbox:checked {
+  background: #fff;
+  border-color: #fff;
+}
+
+.auth-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: #000;
+  clip-path: polygon(15% 45%, 5% 60%, 40% 88%, 95% 18%, 82% 8%, 40% 68%);
+}
+
+.auth-checkbox-label {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1.7;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+}
+
+/* ── Submit Button (exact hero-btn style) ── */
+.auth-btn {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  color: #fff;
+  background: transparent;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  margin-top: 8px;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+
+.auth-btn:hover {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}
+
+/* ── Error state ── */
+.auth-error {
+  font-size: 10px;
+  color: #e07a7a;
+  letter-spacing: 0.1em;
+  text-align: center;
+  padding-top: 4px;
+  display: none;
+}
+
+.auth-error.visible {
+  display: block;
+}
+
+/* ── Divider ── */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 26px 0 20px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ── Switch Link ── */
+.auth-switch {
+  font-size: 11px;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+}
+
+.auth-switch a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  padding-bottom: 1px;
+  transition: border-color 0.2s;
+}
+
+.auth-switch a:hover {
+  border-color: #fff;
+}
+
+/* ── Form toggle ── */
+.auth-card--hidden {
+  display: none;
+}
+
+/* ── Mobile ── */
+@media (max-width: 540px) {
+  .auth-card {
+    padding: 36px 28px 32px;
+  }
+
+  .auth-main {
+    padding: 36px 16px 48px;
+    gap: 22px;
+  }
+}
