@@ -1118,3 +1118,14 @@ body {
     padding: 40px 24px;
   }
 }
+
+/* ── Small phones (iPhone SE and similar) ── */
+@media (max-width: 430px) {
+  .products-collection {
+    font-size: 26px;
+  }
+
+  .product-info-sticky {
+    padding: 32px 18px;
+  }
+}
