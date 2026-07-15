@@ -1,4 +1,7 @@
 node_modules/
+.env
+.env.local
+.vercel
 *.XML
 assets/videos/C1191.MP4
 assets/videos/C1192.MP4

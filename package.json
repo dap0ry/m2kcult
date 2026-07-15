@@ -11,6 +11,7 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "dotenv": "^17.4.2",
     "playwright": "^1.61.1"
   },
   "dependencies": {
