@@ -21,7 +21,13 @@ async function checkPage(browser, fileName) {
 
   assert.strictEqual(await page.locator('.nav-hamburger').isVisible(), true, `${fileName}: hamburger should be visible on mobile`);
   assert.strictEqual(await page.locator('.nav-links').isVisible(), false, `${fileName}: desktop nav-links should be hidden on mobile`);
-  assert.strictEqual(await page.locator('.cart-wrap').isVisible(), true, `${fileName}: cart icon should stay visible on mobile`);
+
+  const logoBox = await page.locator('.nav-logo').boundingBox();
+  const logoCenter = logoBox.x + logoBox.width / 2;
+  assert.ok(
+    Math.abs(logoCenter - 195) < 10,
+    `${fileName}: logo should stay horizontally centered on mobile (center at ${logoCenter}, expected ~195)`
+  );
 
   await page.click('#navHamburgerBtn');
   assert.strictEqual(

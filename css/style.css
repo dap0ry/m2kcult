@@ -103,26 +103,6 @@ body {
   stroke-linejoin: round;
 }
 
-.cart-wrap {
-  position: relative;
-}
-
-.cart-count {
-  position: absolute;
-  top: -7px;
-  right: -9px;
-  background: #fff;
-  color: #000;
-  border-radius: 50%;
-  width: 15px;
-  height: 15px;
-  font-size: 9px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 /* ── Mobile Nav ── */
 .nav-hamburger {
   display: none;
@@ -1062,6 +1042,10 @@ body {
 
   .nav-logo {
     justify-self: center;
+  }
+
+  .nav-actions {
+    min-width: 30px;
   }
 
   .nav-actions .nav-account-link {
