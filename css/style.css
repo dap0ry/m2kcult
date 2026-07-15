@@ -524,15 +524,6 @@ body {
 }
 
 /* ── Collections Page ── */
-.collections-divider {
-  background: #fff;
-  text-align: center;
-  color: #c8b89a;
-  font-size: 13px;
-  letter-spacing: 0.5em;
-  padding: 0 0 8px;
-}
-
 .products-header-centered {
   flex-direction: column;
   align-items: center;
