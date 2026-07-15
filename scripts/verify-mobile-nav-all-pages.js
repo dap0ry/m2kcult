@@ -29,7 +29,7 @@ async function checkPage(browser, fileName) {
     true,
     `${fileName}: overlay should open after hamburger click`
   );
-  assert.strictEqual(await page.locator('.mobile-nav-links a').count(), 4, `${fileName}: overlay should list 4 main nav links`);
+  assert.strictEqual(await page.locator('.mobile-nav-links a').count(), 3, `${fileName}: overlay should list 3 main nav links (Inicio, Tienda, Contacto)`);
 
   await page.click('#mobileNavCloseBtn');
   assert.strictEqual(
