@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Acceso — MK2CULT</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Acceso — M2KCULT</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -28,18 +28,26 @@
 
     <!-- Navbar -->
     <header class="site-header">
+      <button class="nav-hamburger" id="navHamburgerBtn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileNavOverlay">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+
       <a class="nav-logo" href="index.html">
-        <img src="assets/logos/logoBlanco.png" alt="MK2CULT">
+        <img src="assets/logos/logoBlanco.png" alt="M2KCULT">
       </a>
       <ul class="nav-links">
-        <li><a href="index.html#coleccion">Colección</a></li>
-        <li><a href="#">Shop</a></li>
-        <li><a href="#">Archive</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="colecciones.html">Colecciones</a></li>
+        <li><a href="index.html#coleccion">Tienda</a></li>
+        <li><a href="#">Archivo</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
       </ul>
       <div class="nav-actions">
-        <a href="login.html">Account</a>
-        <a href="#">
+        <a href="login.html" class="nav-account-link">Cuenta</a>
+        <a href="#" class="nav-search-link">
           <svg class="nav-icon" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="8"/>
             <line x1="21" y1="21" x2="16.65" y2="16.65"/>
@@ -56,11 +64,26 @@
       </div>
     </header>
 
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+      <button class="mobile-nav-close" id="mobileNavCloseBtn" type="button" aria-label="Cerrar menú">&times;</button>
+      <nav class="mobile-nav-links">
+        <a href="colecciones.html">Colecciones</a>
+        <a href="index.html#coleccion">Tienda</a>
+        <a href="#">Archivo</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+      <div class="mobile-nav-divider"></div>
+      <div class="mobile-nav-secondary">
+        <a href="login.html">Cuenta</a>
+        <a href="#">Buscar</a>
+      </div>
+    </div>
+
     <!-- Auth Content -->
     <main class="auth-main">
 
       <a href="index.html" class="auth-logo-link">
-        <img src="assets/logos/logoBlanco.png" alt="MK2CULT" class="auth-logo">
+        <img src="assets/logos/logoBlanco.png" alt="M2KCULT" class="auth-logo">
       </a>
 
       <!-- ── LOGIN FORM ── -->
@@ -95,7 +118,7 @@
 
       <!-- ── REGISTER FORM (hidden by default) ── -->
       <div class="auth-card auth-card--hidden" id="register-card">
-        <h1 class="auth-title">Crea tu cuenta en MK2CULT</h1>
+        <h1 class="auth-title">Crea tu cuenta en M2KCULT</h1>
 
         <form class="auth-form" onsubmit="return handleRegister(event)">
           <div class="auth-field">
@@ -126,7 +149,7 @@
           </div>
           <label class="auth-checkbox-wrap">
             <input class="auth-checkbox" type="checkbox" name="newsletter">
-            <span class="auth-checkbox-label">Acepto recibir novedades y drops exclusivos de MK2CULT</span>
+            <span class="auth-checkbox-label">Acepto recibir novedades y drops exclusivos de M2KCULT</span>
           </label>
           <p class="auth-error" id="register-error"></p>
           <button type="submit" class="auth-btn">Crear Cuenta &nbsp;→</button>
@@ -219,6 +242,7 @@
       window.location.href = 'index.html';
     }
   </script>
+  <script src="js/nav.js"></script>
 
 </body>
 </html>

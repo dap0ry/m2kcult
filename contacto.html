@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Contacto — M2KCULT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body class="auth-body">
+
+  <!-- Video Background (fixed, never reloads) -->
+  <div class="auth-bg">
+    <video class="auth-video" autoplay muted loop playsinline>
+      <source src="assets/videos/C1207.MP4" type="video/mp4">
+    </video>
+    <div class="auth-overlay"></div>
+  </div>
+
+  <!-- Page content (above video) -->
+  <div class="auth-page-content">
+
+    <!-- Announcement Bar -->
+    <div class="announcement">Nueva Colección &nbsp;|&nbsp; Disponible Ahora</div>
+
+    <!-- Navbar -->
+    <header class="site-header">
+      <button class="nav-hamburger" id="navHamburgerBtn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileNavOverlay">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+
+      <a class="nav-logo" href="index.html">
+        <img src="assets/logos/logoBlanco.png" alt="M2KCULT">
+      </a>
+      <ul class="nav-links">
+        <li><a href="colecciones.html">Colecciones</a></li>
+        <li><a href="index.html#coleccion">Tienda</a></li>
+        <li><a href="#">Archivo</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="nav-account-link">Cuenta</a>
+        <a href="#" class="nav-search-link">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </a>
+        <a href="#" class="cart-wrap">
+          <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="cart-count">0</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+      <button class="mobile-nav-close" id="mobileNavCloseBtn" type="button" aria-label="Cerrar menú">&times;</button>
+      <nav class="mobile-nav-links">
+        <a href="colecciones.html">Colecciones</a>
+        <a href="index.html#coleccion">Tienda</a>
+        <a href="#">Archivo</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+      <div class="mobile-nav-divider"></div>
+      <div class="mobile-nav-secondary">
+        <a href="login.html">Cuenta</a>
+        <a href="#">Buscar</a>
+      </div>
+    </div>
+
+    <!-- Contact Content -->
+    <main class="auth-main">
+
+      <a href="index.html" class="auth-logo-link">
+        <img src="assets/logos/logoBlanco.png" alt="M2KCULT" class="auth-logo">
+      </a>
+
+      <div class="auth-card" id="contact-card">
+        <h1 class="auth-title">Contacto</h1>
+        <p class="auth-subtitle">Cuéntanos, te leemos</p>
+
+        <form class="auth-form" onsubmit="return handleContact(event)">
+          <div class="auth-field">
+            <label class="auth-label" for="contact-name">Nombre</label>
+            <input class="auth-input" type="text" id="contact-name" placeholder="Tu nombre" required>
+          </div>
+          <div class="auth-field">
+            <label class="auth-label" for="contact-email">Email</label>
+            <input class="auth-input" type="email" id="contact-email" placeholder="tu@email.com" autocomplete="email" required>
+          </div>
+          <div class="auth-field">
+            <label class="auth-label" for="contact-message">Mensaje</label>
+            <textarea class="auth-input auth-textarea" id="contact-message" placeholder="Escribe tu mensaje..." rows="4" required></textarea>
+          </div>
+          <button type="submit" class="auth-btn">Enviar &nbsp;→</button>
+        </form>
+
+        <div class="auth-divider"><span>o</span></div>
+        <p class="auth-switch">Creado por <a href="https://www.instagram.com/_m2ktekno_/" target="_blank" rel="noopener">@_m2ktekno_</a></p>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    function handleContact(e) {
+      e.preventDefault();
+      const card = document.getElementById('contact-card');
+      card.innerHTML = `
+        <h1 class="auth-title">¡Gracias!</h1>
+        <p class="auth-subtitle">Hemos recibido tu mensaje. Te responderemos pronto.</p>
+        <p class="auth-switch">Creado por <a href="https://www.instagram.com/_m2ktekno_/" target="_blank" rel="noopener">@_m2ktekno_</a></p>
+      `;
+      return false;
+    }
+  </script>
+  <script src="js/nav.js"></script>
+
+</body>
+</html>
