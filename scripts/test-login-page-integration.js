@@ -43,11 +43,28 @@ function startStaticServer(rootDir) {
   await page.fill('#reg-pw', 'longenough');
   await page.fill('#reg-confirm', 'longenough');
   await page.click('#register-card button[type="submit"]');
-  await page.waitForURL('**/index.html');
-  const storedUser = await page.evaluate(() => localStorage.getItem('mk2cult_user'));
-  assert.strictEqual(storedUser, 'Ana', 'successful register should store the returned name in localStorage');
 
-  await page.evaluate(() => localStorage.clear());
+  await page.waitForSelector('#register-card .auth-title:has-text("correctamente")');
+
+  await page.waitForURL('**/index.html', { timeout: 5000 });
+  const storedName = await page.evaluate(() => localStorage.getItem('mk2cult_user_name'));
+  const storedEmail = await page.evaluate(() => localStorage.getItem('mk2cult_user_email'));
+  assert.strictEqual(storedName, 'Ana', 'successful register should store the returned name in localStorage');
+  assert.strictEqual(storedEmail, 'ana@example.com', 'successful register should store the email in localStorage');
+
+  // Account modal should now show name/email and support logout, on the page we just landed on
+  await page.click('.nav-account-link');
+  await page.waitForSelector('#accountModalOverlay.open');
+  const modalName = await page.locator('#accountModalName').textContent();
+  const modalEmail = await page.locator('#accountModalEmail').textContent();
+  assert.strictEqual(modalName, 'Ana', 'account modal should show the logged-in user name');
+  assert.strictEqual(modalEmail, 'ana@example.com', 'account modal should show the logged-in user email');
+
+  await page.click('#accountModalLogout');
+  await page.waitForURL('**/index.html');
+  const nameAfterLogout = await page.evaluate(() => localStorage.getItem('mk2cult_user_name'));
+  assert.strictEqual(nameAfterLogout, null, 'logout should clear the stored name from localStorage');
+
   await page.goto(`http://127.0.0.1:${port}/login.html`);
   await page.fill('#login-email', 'ana@example.com');
   await page.fill('#login-pw', 'wrongpassword');

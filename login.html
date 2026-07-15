@@ -44,7 +44,7 @@
         <li><a href="contacto.html">Contacto</a></li>
       </ul>
       <div class="nav-actions">
-        <a href="login.html" class="nav-account-link">Cuenta</a>
+        <a href="login.html" class="nav-account-link account-trigger">Cuenta</a>
       </div>
     </header>
 
@@ -57,7 +57,18 @@
       </nav>
       <div class="mobile-nav-divider"></div>
       <div class="mobile-nav-secondary">
-        <a href="login.html">Cuenta</a>
+        <a href="login.html" class="account-trigger">Cuenta</a>
+      </div>
+    </div>
+
+    <div class="account-modal-overlay" id="accountModalOverlay">
+      <div class="account-modal">
+        <button class="account-modal-close" id="accountModalCloseBtn" aria-label="Cerrar">&times;</button>
+        <p class="account-modal-label">Nombre</p>
+        <p class="account-modal-value" id="accountModalName">—</p>
+        <p class="account-modal-label">Email</p>
+        <p class="account-modal-value" id="accountModalEmail">—</p>
+        <button class="account-modal-logout" id="accountModalLogout">Cerrar sesión</button>
       </div>
     </div>
 
@@ -199,7 +210,8 @@
         });
         const data = await res.json();
         if (res.ok) {
-          localStorage.setItem('mk2cult_user', data.name);
+          localStorage.setItem('mk2cult_user_name', data.name);
+          localStorage.setItem('mk2cult_user_email', email);
           window.location.href = 'index.html';
           return false;
         }
@@ -240,8 +252,13 @@
         });
         const data = await res.json();
         if (res.ok) {
-          localStorage.setItem('mk2cult_user', data.name);
-          window.location.href = 'index.html';
+          localStorage.setItem('mk2cult_user_name', data.name);
+          localStorage.setItem('mk2cult_user_email', email);
+          document.getElementById('register-card').innerHTML = `
+            <h1 class="auth-title">¡Registrado correctamente!</h1>
+            <p class="auth-subtitle">Bienvenid@ a M2KCULT, ${data.name}. Te redirigimos...</p>
+          `;
+          setTimeout(() => { window.location.href = 'index.html'; }, 1800);
           return false;
         }
         el.textContent = data.error || 'No se pudo crear la cuenta.';
@@ -253,7 +270,7 @@
       return false;
     }
 
-    if (localStorage.getItem('mk2cult_user')) {
+    if (localStorage.getItem('mk2cult_user_name')) {
       window.location.href = 'index.html';
     }
   </script>
