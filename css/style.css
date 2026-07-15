@@ -539,6 +539,10 @@ body {
   padding: 64px 44px 88px;
 }
 
+.products-section + .products-section {
+  padding-top: 8px;
+}
+
 .products-header {
   display: flex;
   justify-content: space-between;
