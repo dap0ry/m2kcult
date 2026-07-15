@@ -242,11 +242,13 @@ with:
     justify-self: center;
   }
 
-  .nav-account-link,
-  .nav-search-link {
+  .nav-actions .nav-account-link,
+  .nav-actions .nav-search-link {
     display: none;
   }
 ```
+
+> **Note from execution:** the selector must be `.nav-actions .nav-account-link` (not bare `.nav-account-link`) — the pre-existing `.nav-actions a { display: flex; }` rule has specificity (0,1,1), which beats a bare single-class selector (0,1,0) and would otherwise keep these links visible.
 
 Then, still inside the same media query, add the hero fix right after the `.nav-links { display: none; }` rule (currently lines 958-960):
 
