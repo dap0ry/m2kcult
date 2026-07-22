@@ -55,7 +55,7 @@ accountModalLogout.addEventListener('click', () => {
   localStorage.removeItem(ACCOUNT_NAME_KEY);
   localStorage.removeItem(ACCOUNT_EMAIL_KEY);
   closeAccountModal();
-  window.location.href = 'index.html';
+  window.location.href = '/';
 });
 
 accountModalOverlay.addEventListener('click', (e) => {
