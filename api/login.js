@@ -1,12 +1,13 @@
 const { getPool } = require('./_db');
 const { verifyPassword } = require('./_password');
+const { generateSessionToken, hashToken, sessionCookieHeader } = require('./_session');
 
 async function loginUser(db, { email, password } = {}) {
   if (!email || !password) {
     return { status: 401, body: { error: 'Email o contraseña incorrectos.' } };
   }
 
-  const result = await db.query('SELECT name, password_hash FROM users WHERE email = $1', [email]);
+  const result = await db.query('SELECT id, name, password_hash FROM users WHERE email = $1', [email]);
   if (result.rows.length === 0) {
     return { status: 401, body: { error: 'Email o contraseña incorrectos.' } };
   }
@@ -16,7 +17,10 @@ async function loginUser(db, { email, password } = {}) {
     return { status: 401, body: { error: 'Email o contraseña incorrectos.' } };
   }
 
-  return { status: 200, body: { ok: true, name: user.name } };
+  const sessionToken = generateSessionToken();
+  await db.query('UPDATE users SET session_token_hash = $1 WHERE id = $2', [hashToken(sessionToken), user.id]);
+
+  return { status: 200, body: { ok: true, name: user.name }, sessionToken };
 }
 
 module.exports = async function handler(req, res) {
@@ -25,6 +29,9 @@ module.exports = async function handler(req, res) {
     return;
   }
   const result = await loginUser(getPool(), req.body);
+  if (result.sessionToken) {
+    res.setHeader('Set-Cookie', sessionCookieHeader(result.sessionToken));
+  }
   res.status(result.status).json(result.body);
 };
 

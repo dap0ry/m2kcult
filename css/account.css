@@ -1,0 +1,345 @@
+/* ── Account Page (cuenta.html) ── */
+
+.account-page {
+  background: #000;
+  min-height: calc(100vh - 42px - 62px);
+  padding: 64px 28px 96px;
+}
+
+.account-loading {
+  text-align: center;
+  padding: 80px 0;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.account-content {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* ── Top: identity + points ── */
+.account-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 36px;
+  flex-wrap: wrap;
+}
+
+.account-identity {
+  flex: 1 1 260px;
+}
+
+.account-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 10px;
+}
+
+.account-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(30px, 5vw, 42px);
+  font-weight: 700;
+  font-style: italic;
+  color: #fff;
+  letter-spacing: 0.01em;
+  margin-bottom: 8px;
+  word-break: break-word;
+}
+
+.account-email {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.02em;
+  word-break: break-word;
+}
+
+.account-points-panel {
+  flex: 0 1 280px;
+  min-width: 240px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 28px 26px;
+  text-align: center;
+}
+
+.account-points-label {
+  font-size: 9px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 6px;
+}
+
+.account-points-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 44px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 18px;
+}
+
+.account-progress-track {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  margin-bottom: 10px;
+}
+
+.account-progress-fill {
+  height: 100%;
+  background: #fff;
+  transition: width 0.3s ease;
+}
+
+.account-progress-text {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.account-claim-btn {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  color: #fff;
+  background: transparent;
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  transition: background 0.25s, color 0.25s;
+}
+
+.account-claim-btn:hover:not(:disabled) {
+  background: #fff;
+  color: #000;
+}
+
+.account-claim-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.account-claim-btn[hidden] {
+  display: none;
+}
+
+.account-claim-msg {
+  font-size: 10px;
+  letter-spacing: 0.03em;
+  line-height: 1.6;
+  color: #e07a7a;
+  margin-top: 14px;
+  display: none;
+}
+
+.account-claim-msg.visible {
+  display: block;
+}
+
+.account-claim-msg.success {
+  color: #9fd6ab;
+}
+
+/* ── Sections (Añadir código / Pedidos) ── */
+.account-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 28px;
+}
+
+.account-section-label {
+  font-size: 10px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 18px;
+}
+
+.account-code-form {
+  display: flex;
+  gap: 12px;
+}
+
+.account-code-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #fff;
+  padding: 14px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  outline: none;
+  transition: border-color 0.22s;
+}
+
+.account-code-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+  text-transform: none;
+}
+
+.account-code-input:focus {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.account-code-btn {
+  padding: 0 28px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  color: #fff;
+  background: transparent;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  transition: background 0.25s, color 0.25s;
+}
+
+.account-code-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+.account-code-msg {
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: #e07a7a;
+  margin-top: 14px;
+  display: none;
+}
+
+.account-code-msg.visible {
+  display: block;
+}
+
+.account-code-msg.success {
+  color: #9fd6ab;
+}
+
+/* ── Orders ── */
+.account-orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.account-order-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 18px 22px;
+}
+
+.account-order-note {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.account-order-date {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.account-order-side {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.account-order-amount {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 4px;
+}
+
+.account-order-points {
+  font-size: 12px;
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.account-orders-empty {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.7;
+}
+
+/* ── Logout ── */
+.account-logout-btn {
+  align-self: flex-start;
+  padding: 13px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.7);
+  background: transparent;
+  font-size: 9.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+
+.account-logout-btn:hover {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}
+
+/* ── Mobile ── */
+@media (max-width: 540px) {
+  .account-page {
+    padding: 40px 18px 72px;
+  }
+
+  .account-content {
+    gap: 36px;
+  }
+
+  .account-top {
+    flex-direction: column;
+  }
+
+  .account-points-panel {
+    width: 100%;
+  }
+
+  .account-code-form {
+    flex-direction: column;
+  }
+
+  .account-code-btn {
+    padding: 13px;
+  }
+
+  .account-order-card {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .account-order-side {
+    text-align: left;
+  }
+}

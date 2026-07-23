@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Mi Cuenta — M2KCULT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/account.css">
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="announcement">Nueva Colección &nbsp;|&nbsp; Disponible Ahora</div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <button class="nav-hamburger" id="navHamburgerBtn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileNavOverlay">
+      <svg class="nav-icon" viewBox="0 0 24 24">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+
+    <a class="nav-logo" href="/">
+      <img src="https://res.cloudinary.com/dydqye3n1/image/upload/v1784151149/m2kcult/logos/logo-blanco.png" alt="M2KCULT">
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="/#coleccion">Tienda</a></li>
+      <li><a href="/contacto">Contacto</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="/cuenta" class="nav-account-link account-trigger">Cuenta</a>
+    </div>
+  </header>
+
+  <div class="mobile-nav-overlay" id="mobileNavOverlay">
+    <button class="mobile-nav-close" id="mobileNavCloseBtn" type="button" aria-label="Cerrar menú">&times;</button>
+    <nav class="mobile-nav-links">
+      <a href="/">Inicio</a>
+      <a href="/#coleccion">Tienda</a>
+      <a href="/contacto">Contacto</a>
+    </nav>
+    <div class="mobile-nav-divider"></div>
+    <div class="mobile-nav-secondary">
+      <a href="/cuenta" class="account-trigger">Cuenta</a>
+    </div>
+  </div>
+
+  <!-- ── Cuenta ── -->
+  <main class="account-page">
+    <p class="account-loading" id="accountLoading">Cargando…</p>
+
+    <div class="account-content" id="accountContent" hidden>
+
+      <div class="account-top">
+        <div class="account-identity">
+          <p class="account-eyebrow">Mi Cuenta</p>
+          <h1 class="account-name" id="accountName">—</h1>
+          <p class="account-email" id="accountEmail">—</p>
+        </div>
+
+        <div class="account-points-panel">
+          <p class="account-points-label">Puntos</p>
+          <p class="account-points-value" id="accountPoints">0</p>
+          <div class="account-progress-track">
+            <div class="account-progress-fill" id="accountProgressFill"></div>
+          </div>
+          <p class="account-progress-text" id="accountProgressText"></p>
+          <button class="account-claim-btn" id="accountClaimBtn" type="button" hidden>Canjear 10$ de descuento</button>
+          <p class="account-claim-msg" id="accountClaimMsg"></p>
+        </div>
+      </div>
+
+      <section class="account-section">
+        <p class="account-section-label">Añadir código</p>
+        <form class="account-code-form" id="accountCodeForm">
+          <input class="account-code-input" id="accountCodeInput" type="text" placeholder="VG24HJ8" autocomplete="off" maxlength="12" required>
+          <button class="account-code-btn" type="submit">Añadir</button>
+        </form>
+        <p class="account-code-msg" id="accountCodeMsg"></p>
+      </section>
+
+      <section class="account-section">
+        <p class="account-section-label">Pedidos</p>
+        <div class="account-orders-list" id="accountOrdersList"></div>
+        <p class="account-orders-empty" id="accountOrdersEmpty" hidden>Aún no tienes pedidos vinculados. Añade tu primer código arriba.</p>
+      </section>
+
+      <button class="account-logout-btn" id="accountLogoutBtn" type="button">Cerrar sesión</button>
+    </div>
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a href="/" class="footer-logo-link">
+        <img src="https://res.cloudinary.com/dydqye3n1/image/upload/v1784151149/m2kcult/logos/logo-blanco.png" alt="M2KCULT" class="footer-logo">
+      </a>
+      <div class="footer-divider"></div>
+      <nav class="footer-nav">
+        <a href="/#coleccion">Tienda</a>
+        <a href="/contacto">Contacto</a>
+      </nav>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/m2kcult/" target="_blank" class="footer-social-link" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="https://www.tiktok.com/@m2kcult" target="_blank" class="footer-social-link" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.16 8.16 0 004.77 1.52V6.76a4.85 4.85 0 01-1-.07z"/>
+          </svg>
+        </a>
+      </div>
+      <p class="footer-copy">© 2026 M2KCULT. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    const POINTS_PER_CLAIM = 10000;
+
+    const accountLoading = document.getElementById('accountLoading');
+    const accountContent = document.getElementById('accountContent');
+    const accountName = document.getElementById('accountName');
+    const accountEmail = document.getElementById('accountEmail');
+    const accountPoints = document.getElementById('accountPoints');
+    const accountProgressFill = document.getElementById('accountProgressFill');
+    const accountProgressText = document.getElementById('accountProgressText');
+    const accountClaimBtn = document.getElementById('accountClaimBtn');
+    const accountClaimMsg = document.getElementById('accountClaimMsg');
+    const accountCodeForm = document.getElementById('accountCodeForm');
+    const accountCodeInput = document.getElementById('accountCodeInput');
+    const accountCodeMsg = document.getElementById('accountCodeMsg');
+    const accountOrdersList = document.getElementById('accountOrdersList');
+    const accountOrdersEmpty = document.getElementById('accountOrdersEmpty');
+    const accountLogoutBtn = document.getElementById('accountLogoutBtn');
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str == null ? '' : str;
+      return div.innerHTML;
+    }
+
+    function formatDate(value) {
+      if (!value) return '';
+      const d = new Date(value);
+      if (isNaN(d)) return '';
+      return d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+
+    function showMsg(el, text, isSuccess) {
+      el.textContent = text;
+      el.classList.toggle('success', !!isSuccess);
+      el.classList.add('visible');
+    }
+
+    function renderAccount(data) {
+      accountName.textContent = data.name;
+      accountEmail.textContent = data.email;
+      accountPoints.textContent = data.points.toLocaleString('es-ES');
+
+      const remainder = ((data.points % POINTS_PER_CLAIM) + POINTS_PER_CLAIM) % POINTS_PER_CLAIM;
+      const percent = Math.min(100, (remainder / POINTS_PER_CLAIM) * 100);
+      accountProgressFill.style.width = percent + '%';
+      accountProgressText.textContent = `${remainder.toLocaleString('es-ES')} / ${POINTS_PER_CLAIM.toLocaleString('es-ES')} puntos para tu próximo descuento de 10$`;
+      accountClaimBtn.hidden = data.points < POINTS_PER_CLAIM;
+
+      if (data.orders.length === 0) {
+        accountOrdersList.innerHTML = '';
+        accountOrdersEmpty.hidden = false;
+      } else {
+        accountOrdersEmpty.hidden = true;
+        accountOrdersList.innerHTML = data.orders.map((order) => `
+          <div class="account-order-card">
+            <div class="account-order-main">
+              <p class="account-order-note">${escapeHtml(order.note || 'Pedido M2KCULT')}</p>
+              <p class="account-order-date">${formatDate(order.purchase_date)}</p>
+            </div>
+            <div class="account-order-side">
+              ${order.amount_paid != null ? `<p class="account-order-amount">${Number(order.amount_paid).toFixed(2)} €</p>` : ''}
+              <p class="account-order-points">+${order.points.toLocaleString('es-ES')} pts</p>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    async function loadAccount() {
+      try {
+        const res = await fetch('/api/account', { credentials: 'same-origin' });
+        if (res.status === 401) {
+          window.location.href = '/login';
+          return;
+        }
+        const data = await res.json();
+        renderAccount(data);
+        accountLoading.hidden = true;
+        accountContent.hidden = false;
+      } catch (err) {
+        accountLoading.textContent = 'No se pudo cargar tu cuenta. Inténtalo de nuevo.';
+      }
+    }
+
+    accountCodeForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const code = accountCodeInput.value.trim();
+      accountCodeMsg.classList.remove('visible', 'success');
+      try {
+        const res = await fetch('/api/redeem-code', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code }),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          accountCodeInput.value = '';
+          showMsg(accountCodeMsg, `¡Código añadido! +${data.order.points} puntos.`, true);
+          loadAccount();
+        } else {
+          showMsg(accountCodeMsg, data.error || 'No se pudo añadir el código.', false);
+        }
+      } catch (err) {
+        showMsg(accountCodeMsg, 'No se pudo conectar. Inténtalo de nuevo.', false);
+      }
+    });
+
+    accountClaimBtn.addEventListener('click', async () => {
+      accountClaimBtn.disabled = true;
+      accountClaimMsg.classList.remove('visible', 'success');
+      try {
+        const res = await fetch('/api/claim-discount', { method: 'POST', credentials: 'same-origin' });
+        const data = await res.json();
+        if (res.ok) {
+          showMsg(accountClaimMsg, `¡Descuento canjeado! Tu código es ${data.claimCode}. Envíanoslo por chat para aplicarlo en tu próxima compra.`, true);
+          loadAccount();
+        } else {
+          showMsg(accountClaimMsg, data.error || 'No se pudo canjear el descuento.', false);
+        }
+      } catch (err) {
+        showMsg(accountClaimMsg, 'No se pudo conectar. Inténtalo de nuevo.', false);
+      } finally {
+        accountClaimBtn.disabled = false;
+      }
+    });
+
+    accountLogoutBtn.addEventListener('click', async () => {
+      try {
+        await fetch('/api/logout', { method: 'POST', credentials: 'same-origin' });
+      } catch (err) {
+        // still clear client-side state below even if the request failed
+      }
+      localStorage.removeItem('mk2cult_logged_in');
+      window.location.href = '/';
+    });
+
+    loadAccount();
+  </script>
+  <script src="js/nav.js"></script>
+</body>
+</html>

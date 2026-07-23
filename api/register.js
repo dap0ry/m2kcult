@@ -1,6 +1,7 @@
 const { getPool } = require('./_db');
 const { hashPassword } = require('./_password');
 const { sendWelcomeEmail, createBrevoClient } = require('./_email');
+const { generateSessionToken, hashToken, sessionCookieHeader } = require('./_session');
 
 function isValidEmail(email) {
   return typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -17,7 +18,11 @@ async function registerUser(db, emailClient, { name, email, password } = {}) {
   }
 
   const passwordHash = hashPassword(password);
-  await db.query('INSERT INTO users (name, email, password_hash) VALUES ($1, $2, $3)', [name, email, passwordHash]);
+  const sessionToken = generateSessionToken();
+  await db.query(
+    'INSERT INTO users (name, email, password_hash, session_token_hash) VALUES ($1, $2, $3, $4)',
+    [name, email, passwordHash, hashToken(sessionToken)]
+  );
 
   try {
     await sendWelcomeEmail(emailClient, { toEmail: email, toName: name });
@@ -25,7 +30,7 @@ async function registerUser(db, emailClient, { name, email, password } = {}) {
     console.error('Welcome email failed to send:', err.message);
   }
 
-  return { status: 200, body: { ok: true, name } };
+  return { status: 200, body: { ok: true, name }, sessionToken };
 }
 
 module.exports = async function handler(req, res) {
@@ -34,6 +39,9 @@ module.exports = async function handler(req, res) {
     return;
   }
   const result = await registerUser(getPool(), createBrevoClient(), req.body);
+  if (result.sessionToken) {
+    res.setHeader('Set-Cookie', sessionCookieHeader(result.sessionToken));
+  }
   res.status(result.status).json(result.body);
 };
 

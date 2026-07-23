@@ -11,8 +11,8 @@ function createFakeDb(initialUsers = []) {
         return { rows };
       }
       if (sql.startsWith('INSERT')) {
-        const [name, email, password_hash] = params;
-        users.push({ id: users.length + 1, name, email, password_hash });
+        const [name, email, password_hash, session_token_hash] = params;
+        users.push({ id: users.length + 1, name, email, password_hash, session_token_hash });
         return { rows: [] };
       }
       throw new Error('Unsupported query in fake db: ' + sql);
@@ -50,6 +50,8 @@ function createFakeEmailClient({ shouldFail = false } = {}) {
   assert.strictEqual(okResult.body.ok, true);
   assert.strictEqual(db.users.length, 1, 'user should be inserted into db');
   assert.notStrictEqual(db.users[0].password_hash, 'longenough', 'password must be hashed, not stored in plain text');
+  assert.ok(okResult.sessionToken && okResult.sessionToken.length > 0, 'successful registration should issue a session token');
+  assert.strictEqual(db.users[0].session_token_hash.length, 64, 'session token should be stored hashed (sha256 hex)');
   assert.strictEqual(emailClient.calls.length, 1, 'successful registration should send exactly one welcome email');
   assert.strictEqual(emailClient.calls[0].to[0].email, 'ana@example.com');
 

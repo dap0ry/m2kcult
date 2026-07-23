@@ -11,6 +11,12 @@ function createFakeDb(initialUsers = []) {
         const rows = users.filter((u) => u.email === params[0]);
         return { rows };
       }
+      if (sql.startsWith('UPDATE')) {
+        const [sessionTokenHash, id] = params;
+        const user = users.find((u) => u.id === id);
+        if (user) user.session_token_hash = sessionTokenHash;
+        return { rows: [] };
+      }
       throw new Error('Unsupported query in fake db: ' + sql);
     },
   };
@@ -30,6 +36,8 @@ function createFakeDb(initialUsers = []) {
   const okResult = await loginUser(db, { email: 'ana@example.com', password: 'longenough' });
   assert.strictEqual(okResult.status, 200, 'correct credentials should succeed');
   assert.strictEqual(okResult.body.name, 'Ana');
+  assert.ok(okResult.sessionToken && okResult.sessionToken.length > 0, 'successful login should issue a session token');
+  assert.strictEqual(db.users[0].session_token_hash.length, 64, 'session token should be stored hashed (sha256 hex)');
 
   console.log('OK: login handler tests passed');
 })().catch((err) => {
