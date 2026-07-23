@@ -1,7 +1,6 @@
 /* ── Account Page (cuenta.html) ── */
 
 .account-page {
-  background: #000;
   min-height: calc(100vh - 42px - 62px);
   padding: 64px 28px 96px;
 }
@@ -12,7 +11,8 @@
   font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
 }
 
 .account-content {
@@ -40,8 +40,9 @@
   font-size: 10px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
   margin-bottom: 10px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
 }
 
 .account-name {
@@ -53,19 +54,22 @@
   letter-spacing: 0.01em;
   margin-bottom: 8px;
   word-break: break-word;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55);
 }
 
 .account-email {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.65);
   letter-spacing: 0.02em;
   word-break: break-word;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
 }
 
 .account-points-panel {
   flex: 0 1 280px;
   min-width: 240px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   padding: 28px 26px;
   text-align: center;
 }
@@ -74,8 +78,9 @@
   font-size: 9px;
   letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
   margin-bottom: 6px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
 }
 
 .account-points-value {
@@ -85,6 +90,7 @@
   color: #fff;
   line-height: 1;
   margin-bottom: 18px;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55);
 }
 
 .account-progress-track {
@@ -102,10 +108,11 @@
 
 .account-progress-text {
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
   letter-spacing: 0.02em;
   line-height: 1.6;
   margin-bottom: 16px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
 }
 
 .account-claim-btn {
@@ -165,8 +172,9 @@
   font-size: 10px;
   letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
   margin-bottom: 18px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
 }
 
 .account-code-form {
@@ -176,8 +184,8 @@
 
 .account-code-input {
   flex: 1;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
   padding: 14px 16px;
   font-family: 'Inter', sans-serif;
@@ -244,7 +252,8 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   padding: 18px 22px;
 }
 
@@ -253,13 +262,14 @@
   font-size: 17px;
   color: #fff;
   margin-bottom: 6px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
 }
 
 .account-order-date {
   font-size: 10px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .account-order-side {
@@ -269,7 +279,7 @@
 
 .account-order-amount {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.75);
   margin-bottom: 4px;
 }
 
@@ -282,8 +292,9 @@
 
 .account-orders-empty {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.6);
   line-height: 1.7;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
 }
 
 /* ── Logout ── */
