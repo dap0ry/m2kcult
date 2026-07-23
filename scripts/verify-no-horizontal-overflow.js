@@ -8,6 +8,7 @@ const PAGES = [
   'colecciones.html',
   'contacto.html',
   'login.html',
+  'restablecer-contrasena.html',
   'product.html',
   'product-black-snapback.html',
   'product-godmusicera-black-hoodie.html',

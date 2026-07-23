@@ -30,3 +30,12 @@ CREATE TABLE IF NOT EXISTS discount_claims (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   fulfilled_at TIMESTAMPTZ
 );
+
+CREATE TABLE IF NOT EXISTS password_resets (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id),
+  token_hash TEXT NOT NULL UNIQUE,
+  expires_at TIMESTAMPTZ NOT NULL,
+  used_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);

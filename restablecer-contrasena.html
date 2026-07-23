@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Restablecer contraseña — M2KCULT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body class="auth-body">
+
+  <!-- Video Background (fixed, never reloads) -->
+  <div class="auth-bg">
+    <video class="auth-video" autoplay muted loop playsinline>
+      <source src="https://res.cloudinary.com/dydqye3n1/video/upload/v1784148482/m2kcult/login-bg.mp4" type="video/mp4">
+    </video>
+    <div class="auth-overlay"></div>
+  </div>
+
+  <!-- Page content (above video) -->
+  <div class="auth-page-content">
+
+    <!-- Announcement Bar -->
+    <div class="announcement">Nueva Colección &nbsp;|&nbsp; Disponible Ahora</div>
+
+    <!-- Navbar -->
+    <header class="site-header">
+      <button class="nav-hamburger" id="navHamburgerBtn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileNavOverlay">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+
+      <a class="nav-logo" href="/">
+        <img src="https://res.cloudinary.com/dydqye3n1/image/upload/v1784151149/m2kcult/logos/logo-blanco.png" alt="M2KCULT">
+      </a>
+      <ul class="nav-links">
+        <li><a href="/#coleccion">Tienda</a></li>
+        <li><a href="/contacto">Contacto</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="/cuenta" class="nav-account-link account-trigger">Cuenta</a>
+      </div>
+    </header>
+
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+      <button class="mobile-nav-close" id="mobileNavCloseBtn" type="button" aria-label="Cerrar menú">&times;</button>
+      <nav class="mobile-nav-links">
+        <a href="/">Inicio</a>
+        <a href="/#coleccion">Tienda</a>
+        <a href="/contacto">Contacto</a>
+      </nav>
+      <div class="mobile-nav-divider"></div>
+      <div class="mobile-nav-secondary">
+        <a href="/cuenta" class="account-trigger">Cuenta</a>
+      </div>
+    </div>
+
+    <!-- Auth Content -->
+    <main class="auth-main">
+
+      <a href="/" class="auth-logo-link">
+        <img src="https://res.cloudinary.com/dydqye3n1/image/upload/v1784151149/m2kcult/logos/logo-blanco.png" alt="M2KCULT" class="auth-logo">
+      </a>
+
+      <div class="auth-card" id="reset-card">
+        <h1 class="auth-title">Nueva contraseña</h1>
+        <p class="auth-subtitle">Escríbela dos veces para confirmarla</p>
+
+        <form class="auth-form" id="reset-form" onsubmit="return handleReset(event)">
+          <div class="auth-field">
+            <label class="auth-label" for="reset-pw">Nueva contraseña</label>
+            <div class="auth-input-wrap">
+              <input class="auth-input" type="password" id="reset-pw" placeholder="Mínimo 8 caracteres" autocomplete="new-password" minlength="8" required>
+              <button type="button" class="auth-toggle-pw" aria-label="Mostrar contraseña" onclick="togglePw('reset-pw','eye-reset-pw')">
+                <svg id="eye-reset-pw" viewBox="0 0 24 24" width="17" height="17" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="auth-field">
+            <label class="auth-label" for="reset-confirm">Confirmar contraseña</label>
+            <div class="auth-input-wrap">
+              <input class="auth-input" type="password" id="reset-confirm" placeholder="Repite la contraseña" autocomplete="new-password" required>
+              <button type="button" class="auth-toggle-pw" aria-label="Mostrar contraseña" onclick="togglePw('reset-confirm','eye-reset-confirm')">
+                <svg id="eye-reset-confirm" viewBox="0 0 24 24" width="17" height="17" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <p class="auth-error" id="reset-error"></p>
+          <button type="submit" class="auth-btn">Guardar &nbsp;→</button>
+        </form>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    const EYE_OPEN = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+    const EYE_OFF  = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>';
+
+    function togglePw(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const show = input.type === 'password';
+      input.type = show ? 'text' : 'password';
+      document.getElementById(iconId).innerHTML = show ? EYE_OFF : EYE_OPEN;
+    }
+
+    const resetToken = new URLSearchParams(location.search).get('token');
+
+    if (!resetToken) {
+      document.getElementById('reset-card').innerHTML = `
+        <h1 class="auth-title">Enlace no válido</h1>
+        <p class="auth-subtitle">Solicita un nuevo enlace desde la pantalla de acceso.</p>
+        <div class="auth-divider"><span>o</span></div>
+        <p class="auth-switch"><a href="login.html?form=forgot">Recuperar contraseña</a></p>
+      `;
+    }
+
+    async function handleReset(e) {
+      e.preventDefault();
+      const pw = document.getElementById('reset-pw').value;
+      const confirm = document.getElementById('reset-confirm').value;
+      const el = document.getElementById('reset-error');
+
+      if (pw !== confirm) {
+        el.textContent = 'Las contraseñas no coinciden.';
+        el.classList.add('visible');
+        setTimeout(() => el.classList.remove('visible'), 3500);
+        return false;
+      }
+      if (pw.length < 8) {
+        el.textContent = 'La contraseña debe tener mínimo 8 caracteres.';
+        el.classList.add('visible');
+        setTimeout(() => el.classList.remove('visible'), 3500);
+        return false;
+      }
+
+      try {
+        const res = await fetch('/api/reset-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: resetToken, password: pw }),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          document.getElementById('reset-card').innerHTML = `
+            <h1 class="auth-title">¡Contraseña actualizada!</h1>
+            <p class="auth-subtitle">Ya puedes iniciar sesión con tu nueva contraseña. Te redirigimos...</p>
+          `;
+          setTimeout(() => { window.location.href = 'login.html'; }, 1800);
+          return false;
+        }
+        el.textContent = data.error || 'No se pudo actualizar la contraseña.';
+      } catch (err) {
+        el.textContent = 'No se pudo conectar. Inténtalo de nuevo.';
+      }
+      el.classList.add('visible');
+      setTimeout(() => el.classList.remove('visible'), 3500);
+      return false;
+    }
+  </script>
+  <script src="js/nav.js"></script>
+
+</body>
+</html>

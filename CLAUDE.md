@@ -19,9 +19,12 @@ node scripts/test-register-handler.js
 node scripts/test-redeem-code-handler.js
 node scripts/test-claim-discount-handler.js
 node scripts/test-account-handler.js
+node scripts/test-forgot-password-handler.js
+node scripts/test-reset-password-handler.js
 
 # Browser-driven checks (require `npx playwright install` once, then Playwright launches Chromium)
 node scripts/test-login-page-integration.js   # spins up a local static server + mocks /api routes, covers login -> /cuenta -> logout
+node scripts/test-password-reset-flow.js      # forgot-password card -> emailed link -> /restablecer-contrasena
 node scripts/verify-mobile-nav-all-pages.js   # opens every HTML page at 390x844 and checks the mobile nav
 node scripts/verify-no-horizontal-overflow.js
 node scripts/verify-small-phone.js
@@ -41,21 +44,25 @@ No local dev server is defined — pages are opened as static files or served vi
 
 ## Architecture
 
-**Multi-page static site, no templating.** Every top-level page (`index.html`, `colecciones.html`, `contacto.html`, `login.html`, `cuenta.html`, `product*.html`) is a standalone HTML file that duplicates the same header/announcement-bar/mobile-nav/footer markup block. When changing shared chrome (nav, footer), grep across all page files and update each copy — there is no shared partial/include mechanism.
+**Multi-page static site, no templating.** Every top-level page (`index.html`, `colecciones.html`, `contacto.html`, `login.html`, `restablecer-contrasena.html`, `cuenta.html`, `product*.html`) is a standalone HTML file that duplicates the same header/announcement-bar/mobile-nav/footer markup block. When changing shared chrome (nav, footer), grep across all page files and update each copy — there is no shared partial/include mechanism.
 
 **`js/nav.js`** is a shared, non-module script loaded via `<script src="js/nav.js">` on every page, relying on global DOM ids: it only drives the mobile hamburger nav (open/close overlay). `.account-trigger` links are plain anchors to `/cuenta` — there is no client-side interception; `cuenta.html` itself decides whether to show the account or bounce to `/login`. `js/main.js` is the homepage-only newsletter popup (shown after a 5s timeout).
 
 **Styling** is one global `css/style.css` (organized in `/* ── Section ── */` banner-delimited blocks: Header/Navbar, Mobile Nav, Hero, Products, Footer, Product Page, then Responsive breakpoints at the bottom), plus page-scoped stylesheets loaded only where needed: `css/auth.css` (login/register) and `css/account.css` (`cuenta.html`).
 
-**Auth flow (`login.html`):** a single page hosts both the login and register `<form>`s as sibling `.auth-card` blocks toggled via class + `history.pushState` (so `/login` and `/register` are really the same document). Form submit handlers (`handleLogin`, `handleRegister`) `fetch()` `/api/login` / `/api/register`; on success the server sets an `m2k_session` httpOnly cookie and the client just stashes a non-sensitive `mk2cult_logged_in` flag in `localStorage` (a fast UI hint only — real auth state lives server-side in the cookie, never trust `localStorage` for anything sensitive). See `docs/superpowers/specs/2026-07-15-account-backend-design.md` for the original (pre-session) design rationale — sessions were added later, that doc predates them.
+**Auth flow (`login.html`):** a single page hosts the login, register, *and* forgot-password `<form>`s as sibling `.auth-card` blocks toggled via a shared `showCard(name)` helper + `history.pushState` (so `/login`, `/register`, and `login.html?form=forgot` are really the same document). Form submit handlers (`handleLogin`, `handleRegister`) `fetch()` `/api/login` / `/api/register`; on success the server sets an `m2k_session` httpOnly cookie and the client just stashes a non-sensitive `mk2cult_logged_in` flag in `localStorage` (a fast UI hint only — real auth state lives server-side in the cookie, never trust `localStorage` for anything sensitive). See `docs/superpowers/specs/2026-07-15-account-backend-design.md` for the original (pre-session) design rationale — sessions were added later, that doc predates them.
+
+**Password reset:** "¿Olvidaste tu contraseña?" on `login.html` shows the `forgot-card`, which `POST`s `/api/forgot-password`. That endpoint always returns the same generic "check your email" message whether or not the account exists (no user enumeration) and, only if it does, emails a link to `restablecer-contrasena.html?token=...`. That standalone page (same video-bg/auth-card chrome as `login.html`, styled via `css/auth.css`) reads `token` from the query string — with no token it shows an "invalid link" state instead of a form — and `POST`s the new password + token to `/api/reset-password`, which atomically claims the token (single-use, 1-hour expiry) and also clears `session_token_hash` on that user (resetting a password logs the account out everywhere).
 
 **Backend (`api/`)** — Vercel Serverless Functions, each a `module.exports = async function handler(req, res)` plus a separately exported pure function for testability (injected `db`, so `scripts/test-*-handler.js` can pass fake in-memory implementations instead of hitting Postgres):
 - `api/_db.js` — lazily-created singleton `pg.Pool` using `POSTGRES_URL` (Vercel/Neon integration injects this env var; SSL with `rejectUnauthorized: false`).
 - `api/_password.js` — `crypto.scryptSync`-based password hashing (`salt:hash` hex format), no external hashing dep on purpose (avoids native-compile deps in serverless).
 - `api/_session.js` — session cookie helpers: `generateSessionToken`/`hashToken` (random 256-bit token, only the SHA-256 hash is stored in `users.session_token_hash`), `sessionCookieHeader`/`clearCookieHeader`, `getUserFromRequest(db, req)` (parses the `m2k_session` cookie and looks up the user).
-- `api/_email.js` — builds a welcome-email HTML template and sends it via the Brevo REST API (`BREVO_API_KEY`, `BREVO_SENDER_EMAIL` env vars). Welcome email failure is caught and logged, never fails the registration request.
+- `api/_email.js` — builds the welcome-email and password-reset-email HTML templates (logo + Cloudinary campaign photo(s), same visual language as the site) and sends them via the Brevo REST API (`BREVO_API_KEY`, `BREVO_SENDER_EMAIL` env vars). Email failures are caught and logged, never fail the request that triggered them.
 - `api/register.js` / `api/login.js` — on success, issue a session (`Set-Cookie`) in addition to the existing `{ok, name}` body.
 - `api/logout.js` — clears the session server-side and the cookie.
+- `api/forgot-password.js` — `POST {email}`, no session required. Always responds with the same generic body; on a real match it inserts a `password_resets` row (token hashed like sessions) and emails a reset link built from the request's own `Host`/`X-Forwarded-Proto` headers (works unmodified on any custom domain, `*.vercel.app`, or preview deployment).
+- `api/reset-password.js` — `POST {token, password}`, no session required. Atomically claims the `password_resets` row (`UPDATE ... WHERE token_hash=$1 AND used_at IS NULL AND expires_at > now()`), then updates `password_hash` and clears `session_token_hash` for that user.
 - `api/account.js` — `GET`, requires a session. Returns `{name, email, points, orders, claims}`. Points are **never stored** as a mutable balance — always computed as `SUM(redemption_codes.points) - SUM(discount_claims.points_spent)` for that user (a ledger, so it can't drift out of sync).
 - `api/redeem-code.js` — `POST {code}`, requires a session. Atomically claims a `redemption_codes` row (`UPDATE ... WHERE code=$1 AND used_by_user_id IS NULL`), so double-redemption is race-safe without an explicit transaction.
 - `api/claim-discount.js` — `POST`, requires a session. Recomputes the points balance server-side (never trusts the client), and if `>= 10000` inserts a `discount_claims` row with a freshly generated `DESC-XXXXXX` code (retries on the rare `claim_code` collision).

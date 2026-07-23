@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { sendWelcomeEmail, buildWelcomeEmailHtml } = require('../api/_email');
+const { sendWelcomeEmail, buildWelcomeEmailHtml, sendPasswordResetEmail, buildPasswordResetEmailHtml } = require('../api/_email');
 
 function createFakeBrevoClient() {
   return {
@@ -29,6 +29,21 @@ function createFakeBrevoClient() {
   assert.strictEqual(call.to[0].name, 'Ana');
   assert.ok(call.subject.length > 0, 'should have a subject');
   assert.ok(call.htmlContent.includes('Ana'));
+
+  const resetUrl = 'https://m2kcult.com/restablecer-contrasena?token=abc123';
+  const resetHtml = buildPasswordResetEmailHtml('Ana', resetUrl);
+  assert.ok(resetHtml.includes('Ana'), 'reset email HTML should greet the user by name');
+  assert.ok(resetHtml.includes('logo-negro'), 'reset email should use the black M2KCULT logo');
+  assert.ok(resetHtml.includes(resetUrl), 'reset email should link to the reset URL');
+  assert.ok(resetHtml.includes('caduca'), 'reset email should mention the link expires');
+
+  const resetClient = createFakeBrevoClient();
+  await sendPasswordResetEmail(resetClient, { toEmail: 'ana@example.com', toName: 'Ana', resetUrl });
+  assert.strictEqual(resetClient.calls.length, 1, 'should call the email client exactly once');
+  const resetCall = resetClient.calls[0];
+  assert.strictEqual(resetCall.to[0].email, 'ana@example.com');
+  assert.ok(resetCall.subject.toLowerCase().includes('contraseña'), 'reset email subject should mention the password');
+  assert.ok(resetCall.htmlContent.includes(resetUrl));
 
   console.log('OK: email module tests passed');
 })().catch((err) => {
