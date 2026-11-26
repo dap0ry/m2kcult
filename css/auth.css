@@ -4,7 +4,9 @@
 .auth-page-content {
   position: relative;
   z-index: 1;
-  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Override body bg so video shows through */
@@ -34,7 +36,8 @@
 
 /* ── Main Content Area ── */
 .auth-main {
-  height: calc(100vh - 42px - 62px);
+  flex: 1 1 auto;
+  min-height: 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -133,6 +136,32 @@
 .auth-input:focus {
   border-color: rgba(255, 255, 255, 0.45);
   background: rgba(255, 255, 255, 0.06);
+}
+
+/* ── Textarea (contacto.html) ── */
+.auth-textarea {
+  resize: vertical;
+  min-height: 90px;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+}
+
+/* ── Contact form: more fields than login, keep it compact so the
+   fixed no-scroll page still fits everything ── */
+#contact-card .auth-subtitle {
+  margin-bottom: 22px;
+}
+
+#contact-card .auth-form {
+  gap: 12px;
+}
+
+#contact-card .auth-textarea {
+  min-height: 56px;
+}
+
+#contact-card .auth-divider {
+  margin: 16px 0 14px;
 }
 
 /* ── Password toggle ── */
@@ -314,11 +343,33 @@
 /* ── Mobile ── */
 @media (max-width: 540px) {
   .auth-card {
-    padding: 36px 28px 32px;
+    padding: 24px 24px 22px;
   }
 
   .auth-main {
-    padding: 36px 16px 48px;
-    gap: 22px;
+    padding: 16px 16px 20px;
+    gap: 12px;
+  }
+
+  .auth-logo {
+    width: clamp(56px, 12vw, 100px);
+  }
+}
+
+@media (max-width: 540px) and (max-height: 700px) {
+  #contact-card .auth-subtitle {
+    margin-bottom: 14px;
+  }
+
+  #contact-card .auth-form {
+    gap: 8px;
+  }
+
+  #contact-card .auth-textarea {
+    min-height: 40px;
+  }
+
+  #contact-card .auth-divider {
+    margin: 10px 0 8px;
   }
 }
